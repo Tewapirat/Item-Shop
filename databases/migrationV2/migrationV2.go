@@ -2,31 +2,30 @@ package main
 
 import (
 	"github.com/TewApirat/items-shop-api/config"
+	"github.com/TewApirat/items-shop-api/databases"
 	"github.com/TewApirat/items-shop-api/entities"
 	"gorm.io/gorm"
-	"github.com/TewApirat/items-shop-api/databases"
 )
 
-func main (){
+func main() {
 	conf := config.ConfigGettings()
 	db := databases.NewPostgresDatabase(conf.Database)
 
+	tx := db.Connect().Begin()
 
-	tx := db.ConnectionGetting().Begin()
-
-	// fmt.Println(db.ConnectionGetting())
+	// fmt.Println(db.Connect())
 
 	itemsAdding(tx)
 
 	tx.Commit()
-	if tx.Error != nil{
+	if tx.Error != nil {
 		tx.Rollback()
 		panic(tx.Error)
 	}
 
 }
 
-func itemsAdding(tx *gorm.DB){
+func itemsAdding(tx *gorm.DB) {
 	items := []entities.Item{
 		{
 			Name:        "Sword",

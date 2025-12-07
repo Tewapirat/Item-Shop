@@ -13,10 +13,9 @@ func main() {
 	conf := config.ConfigGettings()
 	db := databases.NewPostgresDatabase(conf.Database)
 
+	tx := db.Connect().Begin()
 
-	tx := db.ConnectionGetting().Begin()
-
-	// fmt.Println(db.ConnectionGetting())
+	// fmt.Println(db.Connect())
 
 	playerMigration(tx)
 	adminMigration(tx)
@@ -26,33 +25,32 @@ func main() {
 	purchaseHistoryMigration(tx)
 
 	tx.Commit()
-	if tx.Error != nil{
+	if tx.Error != nil {
 		tx.Rollback()
 		panic(tx.Error)
 	}
 }
 
-func playerMigration(tx *gorm.DB){
+func playerMigration(tx *gorm.DB) {
 	tx.Migrator().CreateTable(&entities.Player{})
 }
 
-func adminMigration(tx *gorm.DB){
+func adminMigration(tx *gorm.DB) {
 	tx.Migrator().CreateTable(&entities.Admin{})
 }
 
-func itemMigration(tx *gorm.DB){
+func itemMigration(tx *gorm.DB) {
 	tx.Migrator().CreateTable(&entities.Item{})
 }
 
-func playerCoinMigration(tx *gorm.DB){
+func playerCoinMigration(tx *gorm.DB) {
 	tx.Migrator().CreateTable(&entities.PlayerCoin{})
 }
 
-func inventoryMigration(tx *gorm.DB){
+func inventoryMigration(tx *gorm.DB) {
 	tx.Migrator().CreateTable(&entities.Inventory{})
 }
 
-func purchaseHistoryMigration(tx *gorm.DB){
+func purchaseHistoryMigration(tx *gorm.DB) {
 	tx.Migrator().CreateTable(&entities.PurchaseHistory{})
 }
-

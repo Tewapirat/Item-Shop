@@ -15,8 +15,8 @@ type postgresDatabase struct {
 }
 
 // ConnectionGetting implements Database.
-func (db *postgresDatabase) ConnectionGetting() *gorm.DB {
-	return  db.DB
+func (db *postgresDatabase) Connect() *gorm.DB {
+	return db.DB
 }
 
 var (
