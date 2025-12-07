@@ -2,9 +2,10 @@ package repository
 
 import (
 	"github.com/TewApirat/items-shop-api/entities"
+	_itemManagingException "github.com/TewApirat/items-shop-api/pkg/itemManaging/exception"
+	_itemManagingModel "github.com/TewApirat/items-shop-api/pkg/itemManaging/model"
 	"github.com/labstack/echo/v4"
 	"gorm.io/gorm"
-	_itemManagingException "github.com/TewApirat/items-shop-api/pkg/itemManaging/exception"
 )
 
 type itemManagingRepositoryImpl struct{
@@ -28,4 +29,17 @@ func (r *itemManagingRepositoryImpl)Creating(itemEntity *entities.Item)(*entitie
 		return nil, &_itemManagingException.ItemCreating{}
 	}
 	return item,nil
+}
+
+
+func (r *itemManagingRepositoryImpl)Editing(itemID uint64, itemEditingReq * _itemManagingModel.ItemEditingReq) (uint64, error){
+	if err := r.db.Model(&entities.Item{}).Where("id = ?", itemID).Updates(itemEditingReq).Error; err != nil {
+		r.logger.Errorf("Editing item failed: %s",err.Error())
+		return 0, &_itemManagingException.ItemEditing{}
+	}
+	
+	
+	
+	return itemID,nil
+
 }
