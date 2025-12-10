@@ -15,7 +15,6 @@ type (
 
 		Server 	  		*Server 			`mapstructure:"server" validate:"required"`
 		OAuth2  		*OAuth2 			`mapstructure:"oauth2" validate:"required"`
-		State			*State				`mapstructure:"state" validate:"required"`
 		Database 		*Database 			`mapstructure:"database" validate:"required"`
 
 
