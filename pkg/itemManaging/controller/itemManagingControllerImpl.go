@@ -25,12 +25,12 @@ func (c *itemManagingControllerImpl) Creating(pctx echo.Context) error {
 	customeEchoRequest := custom.NewCustomEchoRequest(pctx)
 
 	if err := customeEchoRequest.Bind(itemCreatingReq); err != nil {
-		return custom.Error(pctx, http.StatusBadRequest, err.Error())
+		return custom.Error(pctx, http.StatusBadRequest, err)
 	}
 
 	item, err := c.itemManagingService.Creating(itemCreatingReq)
 	if err != nil {
-		return custom.Error(pctx, http.StatusInternalServerError, err.Error())
+		return custom.Error(pctx, http.StatusInternalServerError, err)
 	}
 	return pctx.JSON(http.StatusCreated, item)
 
@@ -39,7 +39,7 @@ func (c *itemManagingControllerImpl) Creating(pctx echo.Context) error {
 func (c *itemManagingControllerImpl) Editing(pctx echo.Context) error {
 	itemID, err := c.getItemID(pctx)
 	if err != nil {
-		return custom.Error(pctx, http.StatusBadRequest, err.Error())
+		return custom.Error(pctx, http.StatusBadRequest, err)
 	}
 
 	itemEditingReq := new(_itemManagingModel.ItemEditingReq)
@@ -47,12 +47,12 @@ func (c *itemManagingControllerImpl) Editing(pctx echo.Context) error {
 	customeEchoRequest := custom.NewCustomEchoRequest(pctx)
 
 	if err := customeEchoRequest.Bind(itemEditingReq); err != nil {
-		return custom.Error(pctx, http.StatusBadRequest, err.Error())
+		return custom.Error(pctx, http.StatusBadRequest, err)
 	}
 
 	item, err := c.itemManagingService.Editing(itemID, itemEditingReq)
 	if err != nil {
-		return custom.Error(pctx, http.StatusInternalServerError, err.Error())
+		return custom.Error(pctx, http.StatusInternalServerError, err)
 	}
 
 	return pctx.JSON(http.StatusOK, item)
@@ -62,11 +62,11 @@ func (c *itemManagingControllerImpl) Editing(pctx echo.Context) error {
 func (c *itemManagingControllerImpl) Archiving(pctx echo.Context) error {
 	itemID, err := c.getItemID(pctx)
 	if err != nil {
-		return custom.Error(pctx, http.StatusBadRequest, err.Error())
+		return custom.Error(pctx, http.StatusBadRequest, err)
 	}
 
 	if err := c.itemManagingService.Archiving(itemID);err != nil{
-		return custom.Error(pctx, http.StatusInternalServerError, err.Error())
+		return custom.Error(pctx, http.StatusInternalServerError, err)
 	}
 
 	return pctx.NoContent(http.StatusNoContent)
