@@ -71,7 +71,7 @@ func (s *googleOAuth2Service) IsThisGuyIsReallyPlayer(playerID string) bool {
 }
 
 func (s *googleOAuth2Service) IsThisGuyIsReallyAdmin(adminID string) bool {
-	admin, err := s.playerRepository.FindByID(adminID)
+	admin, err := s.adminRepository.FindByID(adminID)
 	if err != nil {
 		return false
 	}

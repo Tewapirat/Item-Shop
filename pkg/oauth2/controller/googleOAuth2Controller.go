@@ -208,8 +208,8 @@ func (c * googleOAuth2Controller)Logout(pctx echo.Context)  error {
 		return custom.Error(pctx, http.StatusInternalServerError, &_oauth2Exception.Logout{})
 	}
 
-	c.removeCookie(pctx, accessTokenCookieName)
-	c.removeCookie(pctx, refreshTokenCookieName)
+	c.removesameSiteCookie(pctx, accessTokenCookieName)
+	c.removesameSiteCookie(pctx, refreshTokenCookieName)
 
 
 	return pctx.JSON(http.StatusOK, &_oauth2Model.LogoutResponse{Message: "Logout Successful"})
@@ -330,11 +330,6 @@ func (c *googleOAuth2Controller)removesameSiteCookie(pctx echo.Context, name str
 	pctx.SetCookie(cookie)
 
 }
-
-
-
-
-
 
 
 func (c *googleOAuth2Controller) randomState() string {

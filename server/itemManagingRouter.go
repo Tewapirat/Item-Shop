@@ -7,7 +7,7 @@ import (
 	_itemShopRepository "github.com/TewApirat/items-shop-api/pkg/itemShop/repository"
 )
 
-func (s *echoServer)initItemManagingRouter(){
+func (s *echoServer)initItemManagingRouter(m *authorizingMiddleware){
 
 	router := s.app.Group("v1/item-managing")
 
@@ -20,9 +20,9 @@ func (s *echoServer)initItemManagingRouter(){
 	)
 	itemMangingController := _itemManagingController.NewItemManagingControllerImpl(itemManagingService)
 
-	router.POST("", itemMangingController.Creating)
-	router.PATCH("/:itemID",itemMangingController.Editing)
-	router.DELETE("/:itemID",itemMangingController.Archiving)
+	router.POST("", itemMangingController.Creating, m.AdminAuthorizing)
+	router.PATCH("/:itemID",itemMangingController.Editing, m.AdminAuthorizing)
+	router.DELETE("/:itemID",itemMangingController.Archiving, m.AdminAuthorizing)
 
 
 }
