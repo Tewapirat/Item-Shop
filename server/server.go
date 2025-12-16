@@ -72,6 +72,7 @@ func (s *echoServer) Start() {
 	s.initItemShopRouter()
 	s.initItemManagingRouter(authorizingMiddleware)
 	s.initPlayerCoinRouter(authorizingMiddleware)
+	s.initinventoryRouter(authorizingMiddleware)
 
 
 	quitCh := make(chan os.Signal, 1)
