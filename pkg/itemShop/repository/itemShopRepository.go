@@ -1,7 +1,7 @@
 package repository
 
 import (
-	"github.com/TewApirat/items-shop-api/entities"
+	entities "github.com/TewApirat/items-shop-api/entities"
 	_itemShopModel "github.com/TewApirat/items-shop-api/pkg/itemShop/model"
 	"gorm.io/gorm"
 )
