@@ -2,11 +2,11 @@ package exception
 
 import "fmt"
 
-type ItemQuanitityNotEnough struct{
+type ItemNotEnough struct{
 	ItemID uint64
 }
 
-func (e *ItemQuanitityNotEnough) Error() string {
+func (e *ItemNotEnough) Error() string {
 	return fmt.Sprintf("itemID: %d is not enough",e.ItemID)
 }
 

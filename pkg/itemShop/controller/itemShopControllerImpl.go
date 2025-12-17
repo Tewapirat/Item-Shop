@@ -65,7 +65,25 @@ func (c *itemShopControllerImpl)Buying(pctx echo.Context)error{
 	return pctx.JSON(http.StatusOK,playerCoin)
 }
 
-func (c *itemShopControllerImpl)Selling(pctx echo.Context)error{
-	return nil
-}
+func (c *itemShopControllerImpl) Selling(pctx echo.Context) error {
+	playerID, err := validation.PlayerIDGetting(pctx)
+	if err != nil {
+		return custom.Error(pctx, http.StatusBadRequest, err)
+	}
 
+	sellingReq := new(_itemShopModel.SellingReq)
+
+	validatingContext := custom.NewCustomEchoRequest(pctx)
+
+	if err := validatingContext.Bind(sellingReq); err != nil {
+		return custom.Error(pctx, http.StatusBadRequest, err)
+	}
+	sellingReq.PlayerID = playerID
+
+	result, err := c.itemShopService.Selling(sellingReq)
+	if err != nil {
+		return custom.Error(pctx, http.StatusInternalServerError, err)
+	}
+
+	return pctx.JSON(http.StatusOK, result)
+}
