@@ -69,7 +69,7 @@ func (s *echoServer) Start() {
 	
 
 	s.initOAuth2Router()
-	s.initItemShopRouter()
+	s.initItemShopRouter(authorizingMiddleware)
 	s.initItemManagingRouter(authorizingMiddleware)
 	s.initPlayerCoinRouter(authorizingMiddleware)
 	s.initinventoryRouter(authorizingMiddleware)
